@@ -36,6 +36,16 @@ function App() {
     setTodos(todos => [...todos.filter(todo => todo.id !== id)])
   }
 
+  const updateTodo = (id, task) => {
+    setTodos(todos => {
+      const todoIdx = todos.findIndex(t => t.id === id)
+      const newTodos = [...todos]
+      newTodos[todoIdx].task = task
+
+      return newTodos
+    }) 
+  }
+
   return (
     <div className="App h-screen bg-gradient-to-br from-violet-300 via-blue-300 to-emerald-300">
       <div className="max-w-4xl mx-auto py-6 px-4 sm:p-10">
@@ -46,6 +56,7 @@ function App() {
             onCreateTodo={addTodo} 
             onMark={markTodo} 
             onRemove={removeTodo}
+            onEdit={updateTodo}
           />
         </TodoContainer>
       </div>

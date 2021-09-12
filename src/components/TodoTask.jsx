@@ -1,7 +1,7 @@
-import React from 'react'
-import { Trash } from 'react-feather'
+import React, { useState } from 'react'
+import { Trash, Edit2 } from 'react-feather'
 
-function TodoTask({ todo, onMark, onRemove }) {
+function TodoTask({ todo, onMark, onRemove, onEdit }) {
 	const handleDone = (e) => {
 		const isChecked = e.target.checked
 		onMark(todo.id, isChecked)
@@ -21,10 +21,18 @@ function TodoTask({ todo, onMark, onRemove }) {
       	{todo.task}
 			</span>
 
-			<Trash 
-				onClick={() => onRemove(todo.id)}
-				className="ml-auto w-5 h-5 cursor-pointer hidden transition-color duration-300 group-hover:(block) hover:(text-red-400)" 
-			/>
+			<div className="ml-auto flex space-x-4">
+				{!todo.done && 
+					<Edit2 
+						onClick={() => onEdit()}
+						className="w-5 h-5 cursor-pointer transition-color duration-300 hidden group-hover:(block) hover:(text-orange-300)"
+					/>
+				}
+				<Trash 
+					onClick={() => onRemove()}
+					className="w-5 h-5 cursor-pointer hidden transition-color duration-300 group-hover:(block) hover:(text-red-400)" 
+				/>
+			</div>
     </li>
 	)
 }
