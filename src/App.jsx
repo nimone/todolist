@@ -22,9 +22,11 @@ function App() {
   }
 
   const addTodo = task => {
+    const timestamp = Date.now()
     const newTodo = {
       task,
-      id: Math.random(),
+      timestamp,
+      id: timestamp,
       done: false
     }
     setTodos(todos => [...todos, newTodo])
@@ -38,7 +40,7 @@ function App() {
     <div className="App h-screen bg-gradient-to-br from-violet-300 via-blue-300 to-emerald-300">
       <div className="max-w-4xl mx-auto py-6 px-4 sm:p-10">
         <TodoContainer>
-          <TodoHeader />
+          <TodoHeader title="TodoList" />
           <TodoList 
             todos={todos} 
             onCreateTodo={addTodo} 
