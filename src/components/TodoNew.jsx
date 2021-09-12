@@ -6,11 +6,7 @@ function TodoNew({ onCreate }) {
 
 	const createTodo = e => {
 		e.preventDefault()
-		onCreate({
-			id: Math.random(),
-			task: newTodo,
-			done: false
-		})
+		onCreate(newTodo)
 		setNewTodo("")
 	}
 	return (

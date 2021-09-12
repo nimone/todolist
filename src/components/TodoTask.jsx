@@ -1,12 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Trash } from 'react-feather'
 
 function TodoTask({ todo, onMark, onRemove }) {
-	const [done, setDone] = useState(todo.done) 
-
 	const handleDone = (e) => {
 		const isChecked = e.target.checked
-		setDone(isChecked)
 		onMark(todo.id, isChecked)
 		console.log(isChecked ? "checked" : "unChecked", todo.id)
 	}
@@ -17,10 +14,10 @@ function TodoTask({ todo, onMark, onRemove }) {
 				type="checkbox" 
 				className="form-tick cursor-pointer appearance-none h-5 w-5 border border-white rounded-full checked:(bg-gray-300 border-transparent) focus:outline-none checked:(animated animate-jello) transform transition-transform duration-200 hover:scale-110" 
 				onClick={handleDone}
-				defaultChecked={done}
+				defaultChecked={todo.done}
 			/>
 
-			<span className={`mx-3 ${done ? "text-gray-300 line-through" : ""}`}>
+			<span className={`mx-3 ${todo.done ? "text-gray-300 line-through" : ""}`}>
       	{todo.task}
 			</span>
 

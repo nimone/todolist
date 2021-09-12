@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import 'virtual:windi.css'
 
 import useLocalStorage from './useLocalStorage'
@@ -10,20 +10,23 @@ import TodoList from './components/TodoList'
 
 function App() {
   const [todos, setTodos] = useLocalStorage("todos", [])
-  const [showTodoInput, setShowTodoInput] = useState(false)
 
   const markTodo = (id, isDone) => {
     setTodos(todos => {
       const todoIdx = todos.findIndex(t => t.id === id)
-      return [
-        ...todos.slice(0, todoIdx),
-        { ...todos[todoIdx], done: isDone },
-        ...todos.slice(todoIdx + 1),
-      ]
+      const newTodos = [...todos]
+      newTodos[todoIdx].done = isDone
+
+      return newTodos
     }) 
   }
 
-  const addTodo = newTodo => {
+  const addTodo = task => {
+    const newTodo = {
+      task,
+      id: Math.random(),
+      done: false
+    }
     setTodos(todos => [...todos, newTodo])
   }
 
@@ -35,11 +38,9 @@ function App() {
     <div className="App h-screen bg-gradient-to-br from-violet-300 via-blue-300 to-emerald-300">
       <div className="max-w-4xl mx-auto py-6 px-4 sm:p-10">
         <TodoContainer>
-          <TodoHeader onAdd={() => setShowTodoInput(true)} />
+          <TodoHeader />
           <TodoList 
             todos={todos} 
-            showCreateTodo={showTodoInput}
-            setShowCreateTodo={setShowTodoInput}
             onCreateTodo={addTodo} 
             onMark={markTodo} 
             onRemove={removeTodo}
