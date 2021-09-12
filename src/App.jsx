@@ -1,19 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import 'virtual:windi.css'
 
+import useLocalStorage from './useLocalStorage'
+
 import TodoContainer from './components/TodoContainer'
 import TodoHeader from './components/TodoHeader'
 import TodoList from './components/TodoList'
 
-const todosLocal = [    
-  {id:0, done:false, task: "Start reading sem 4 books"},
-  {id:1, done:false, task: "Make notes for react hooks"},
-  {id:2, done:true, task: "Flutter dev roadmap"},
-  {id:3, done:false, task: "Finish Nextjs firebase course"}
-]
 
 function App() {
-  const [todos, setTodos] = useState([])
+  const [todos, setTodos] = useLocalStorage("todos", [])
   const [showTodoInput, setShowTodoInput] = useState(false)
 
   const markTodo = (id, isDone) => {
@@ -35,13 +31,9 @@ function App() {
     setTodos(todos => [...todos.filter(todo => todo.id !== id)])
   }
 
-  useEffect(() => {
-    setTodos(todosLocal)
-  }, [])
-
   return (
     <div className="App h-screen bg-gradient-to-br from-violet-300 via-blue-300 to-emerald-300">
-      <div className="max-w-4xl mx-auto p-10">
+      <div className="max-w-4xl mx-auto py-6 px-4 sm:p-10">
         <TodoContainer>
           <TodoHeader onAdd={() => setShowTodoInput(true)} />
           <TodoList 

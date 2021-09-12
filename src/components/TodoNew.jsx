@@ -26,7 +26,7 @@ function TodoNew({ onCreate }) {
 					onChange={e => setNewTodo(e.target.value)} 
 					required
 				/>
-				<button type="submit" className="ml-auto border-none focus:outline-none">
+				<button type="submit" className="ml-auto flex items-center border-none focus:outline-none">
 					<Plus />
 				</button>
 			</form>
