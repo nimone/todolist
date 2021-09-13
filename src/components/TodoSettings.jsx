@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Trash } from 'react-feather'
 
 import { setTheme, setRemoveCompleted, removeCompletedTodos } from '../redux'
+import { themes } from '../redux'
 
 function TodoSettings() {
 	const settings = useSelector(state => state.settings)
@@ -12,7 +13,7 @@ function TodoSettings() {
 		<div className="flex flex-col w-full justify-start items-center py-2 px-3 text-white bg-gray-900/80 shadow-sm">
 			{/*<h3 className="text-md font-bold">Settings</h3>*/}
 			<SettingSection title="Themes:">
-				{Object.entries(settings.themes).map(([id, theme]) => (
+				{Object.entries(themes).map(([id, theme]) => (
 					<ThemedButton 
 						key={id}
 						theme={theme}

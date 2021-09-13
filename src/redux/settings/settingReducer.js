@@ -1,4 +1,4 @@
-import { actionTypes, themes } from './settingTypes'
+import { actionTypes } from './settingTypes'
 
 function settingReducer(state = {}, action) {
 	switch(action.type) {
@@ -12,6 +12,12 @@ function settingReducer(state = {}, action) {
 			return {
 				...state,
 				removeCompleted: action.payload
+			}
+
+		case actionTypes.SET_SORT_TYPE:
+			return {
+				...state,
+				sortType: action.payload
 			}
 
 		default: return state

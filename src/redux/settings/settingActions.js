@@ -13,3 +13,10 @@ export function setRemoveCompleted(bool) {
 		payload: bool,
 	}
 }
+
+export function setSortType(sortType) {
+	return {
+		type: actionTypes.SET_SORT_TYPE,
+		payload: sortType
+	}
+}

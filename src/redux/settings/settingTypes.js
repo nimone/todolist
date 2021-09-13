@@ -1,6 +1,7 @@
 export const actionTypes = {
 	SET_THEME: "SET_THEME",
 	SET_REMOVE_COMPLETED: "SET_REMOVE_COMPLETED",
+	SET_SORT_TYPE: "SET_SORT_TYPE",
 }
 
 export const themes = {
@@ -12,4 +13,9 @@ export const themes = {
 	5: "from-teal-300 to-orange-400",
 	6: "from-gray-600 to-gray-700",
 	7: "from-light-900 to-true-gray-300",
+}
+
+export const sortOptions = {
+	newest: "Newest First",
+	oldest: "Oldest First",
 }

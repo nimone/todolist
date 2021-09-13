@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { addTodo } from './redux'
+import { addTodo, themes } from './redux'
 import 'virtual:windi.css'
 
 import TodoContainer from './components/TodoContainer'
@@ -12,8 +12,13 @@ import TodoForm from './components/TodoForm'
 
 function App() {
   const [showSettings, setShowSettings] = useState(false)
-  const todos = useSelector(state => state.todos)
-  const currentTheme = useSelector(state => state.settings.themes[state.settings.currentTheme])
+  const sortType = useSelector(state => state.settings.sortType)
+  const todos = useSelector(state => state.todos.sort((a, b) => {
+    return sortType === "newest" 
+      ? b.timestamp - a.timestamp
+      : a.timestamp - b.timestamp 
+  }))
+  const currentTheme = useSelector(state => themes[state.settings.currentTheme])
   const dispatch = useDispatch()
 
   const createTodo = task => {
