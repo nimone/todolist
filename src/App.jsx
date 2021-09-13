@@ -14,6 +14,7 @@ function App() {
   const [showSettings, setShowSettings] = useState(false)
   const todos = useSelector(state => state.todos)
   const currentTheme = useSelector(state => state.settings.themes[state.settings.currentTheme])
+  const dispatch = useDispatch()
 
   const createTodo = task => {
     const timestamp = Date.now()

@@ -6,3 +6,10 @@ export function setTheme(themeID) {
 		payload: themeID,
 	}
 }
+
+export function setRemoveCompleted(bool) {
+	return {
+		type: actionTypes.SET_REMOVE_COMPLETED,
+		payload: bool,
+	}
+}

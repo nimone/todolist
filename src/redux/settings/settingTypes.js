@@ -1,5 +1,6 @@
 export const actionTypes = {
 	SET_THEME: "SET_THEME",
+	SET_REMOVE_COMPLETED: "SET_REMOVE_COMPLETED",
 }
 
 export const themes = {

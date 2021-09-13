@@ -20,3 +20,9 @@ export function removeTodo(id) {
 		payload: id
 	}
 }
+
+export function removeCompletedTodos() {
+	return {
+		type: actionTypes.REMOVE_COMPLETED_TODOS
+	}
+}

@@ -7,6 +7,13 @@ function settingReducer(state = {}, action) {
 				...state,
 				currentTheme: action.payload
 			}
+
+		case actionTypes.SET_REMOVE_COMPLETED:
+			return {
+				...state,
+				removeCompleted: action.payload
+			}
+
 		default: return state
 	}
 }

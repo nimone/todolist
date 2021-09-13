@@ -7,7 +7,8 @@ const persistedState = {
 		? JSON.parse(localStorage.getItem("settings")) 
 		: {
 				themes,
-				currentTheme: 0
+				currentTheme: 0,
+				removeCompleted: false
 			}
 }
 

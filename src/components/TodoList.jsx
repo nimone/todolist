@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { removeTodo, updateTodo } from '../redux'
 
 import TodoTask from './TodoTask'
@@ -7,11 +7,22 @@ import TodoForm from './TodoForm'
 
 function TodoList({ todos }) {
   const dispatch = useDispatch()
+  const settings = useSelector(state => state.settings)
   const [editTodoId, setEditTodoId] = useState(null)
 
   const handleUpdate = (id, updateObj) => {
     dispatch(updateTodo(id, updateObj))
     setEditTodoId(null)
+  }
+
+  const handleComplete = (id, completed) => {
+    handleUpdate(id, {completed})
+
+    if (settings.removeCompleted && completed) {
+      setTimeout(() => {
+        dispatch(removeTodo(id))
+      }, 500)
+    }
   }
   
 	return (
@@ -28,7 +39,7 @@ function TodoList({ todos }) {
           <TodoTask 
         		key={todo.id} 
         		todo={todo} 
-        		onMark={completed => handleUpdate(todo.id, {completed})} 
+        		onMark={completed => handleComplete(todo.id, completed)} 
             onRemove={() => dispatch(removeTodo(todo.id))} 
             onEdit={() => setEditTodoId(todo.id)}
         	/>

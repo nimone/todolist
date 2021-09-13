@@ -20,8 +20,11 @@ function todoReducer(state = initialState, action) {
 
       return newState
 
-     case actionTypes.REMOVE_TODO:
-     	return [...state.filter(todo => todo.id !== action.payload)]
+    case actionTypes.REMOVE_TODO:
+    	return [...state.filter(todo => todo.id !== action.payload)]
+
+    case actionTypes.REMOVE_COMPLETED_TODOS:
+    	return [...state.filter(todo => !todo.completed)]
 
 		default: return state
 	}
