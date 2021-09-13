@@ -1,15 +1,13 @@
 import { createStore } from 'redux'
 import rootReducer from './rootReducer'
-
-let persistedState = {
-	todos: JSON.parse(localStorage.getItem("todos") || "[]")
-}
+import persistedState from './persistedState'
 
 const store = createStore(rootReducer, persistedState)
 
 store.subscribe(() => {
-	const { todos } = store.getState()
+	const { todos, settings } = store.getState()
   localStorage.setItem("todos", JSON.stringify(todos))
+  localStorage.setItem("settings", JSON.stringify(settings))
 })
 
 export default store
