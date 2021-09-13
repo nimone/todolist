@@ -9,7 +9,7 @@ function TodoTask({ todo, onMark, onRemove, onEdit }) {
 	}
 
 	return (
-		<li className="flex items-center px-3 py-2 border-b border-white/10 group">
+		<li className="flex bg-gray-900/60 items-center px-3 py-2 border-b border-white/10 group">
 			<input 
 				type="checkbox" 
 				className="form-tick cursor-pointer appearance-none min-h-5 min-w-5 border border-white rounded-full checked:(bg-gray-300 border-transparent) focus:outline-none checked:(animated animate-jello) transform transition-transform duration-200 hover:scale-110" 

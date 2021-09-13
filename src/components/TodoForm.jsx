@@ -11,7 +11,7 @@ function TodoForm({ task, onSubmit, type }) {
 	}
 
 	return (
-		<li className={`flex bg-gray-900/20 items-center justify-between px-3 py-2 border-b border-white/10`}>
+		<li className={`w-full text-white flex bg-gray-900/70 items-center justify-between px-3 py-2 border-b border-white/10`}>
 			<Edit2 className="w-5 h-5 animated animate-swing" />
 			<form onSubmit={handleSubmit} className="flex-1 flex">
 				<input

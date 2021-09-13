@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { addTodo, removeTodo, updateTodo } from '../redux'
+import { removeTodo, updateTodo } from '../redux'
 
 import TodoTask from './TodoTask'
 import TodoForm from './TodoForm'
@@ -13,20 +13,9 @@ function TodoList({ todos }) {
     dispatch(updateTodo(id, updateObj))
     setEditTodoId(null)
   }
-
-  const createTodo = task => {
-    const timestamp = Date.now()
-    dispatch(addTodo({
-      task,
-      timestamp,
-      id: timestamp,
-      completed: false
-    }))
-  }
   
 	return (
-    <ul className="w-full text-white bg-gray-900/60 rounded-b">
-  		<TodoForm type="new" task="" onSubmit={createTodo} />
+    <ul className="w-full text-white rounded-b">
       {todos.map(todo => (
         todo.id === editTodoId ? (
           <TodoForm
