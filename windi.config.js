@@ -1,4 +1,4 @@
-import { themes } from './src/redux/settings/settingTypes'
+import { themes } from './src/redux'
 
 export default {
 	darkMode: 'class',
