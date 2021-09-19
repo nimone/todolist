@@ -13,10 +13,12 @@ import TodoForm from './components/TodoForm'
 function App() {
   const [showSettings, setShowSettings] = useState(false)
   const sortType = useSelector(state => state.settings.sortType)
-  const todos = useSelector(state => state.todos.sort((a, b) => {
-    return sortType === "newest" 
-      ? b.timestamp - a.timestamp
-      : a.timestamp - b.timestamp 
+  const todos = useSelector(state => [...state.todos].sort((a, b) => {
+    switch(sortType){
+      case "newest": return b.timestamp - a.timestamp
+      case "oldest": return a.timestamp - b.timestamp 
+      default: return 0
+    } 
   }))
   const currentTheme = useSelector(state => themes[state.settings.currentTheme])
   const dispatch = useDispatch()
