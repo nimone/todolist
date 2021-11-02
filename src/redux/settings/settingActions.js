@@ -20,3 +20,10 @@ export function setSortType(sortType) {
 		payload: sortType
 	}
 }
+
+export function setCurrentProject(newProject) {
+	return {
+		type: actionTypes.SET_CURRENT_PROJECT,
+		payload: newProject
+	}
+}

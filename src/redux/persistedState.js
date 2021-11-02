@@ -6,6 +6,7 @@ const persistedState = {
 	settings: await getSettings() || {
 		currentTheme: 0,
 		sortType: "newest",
+		currentProject: 0,
 		removeCompleted: false
 	},
 }

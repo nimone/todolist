@@ -20,6 +20,12 @@ function settingReducer(state = {}, action) {
 				sortType: action.payload
 			}
 
+		case actionTypes.SET_CURRENT_PROJECT:
+			return {
+				...state,
+				currentProject: action.payload
+			}
+
 		default: return state
 	}
 }
