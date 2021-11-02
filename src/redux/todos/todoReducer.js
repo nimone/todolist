@@ -4,6 +4,9 @@ const initialState = []
 
 function todoReducer(state = initialState, action) {
 	switch(action.type) {
+		case actionTypes.SET_TODOS:
+			return action.payload
+			
 		case actionTypes.ADD_TODO: 
 			return [
 				...state,
