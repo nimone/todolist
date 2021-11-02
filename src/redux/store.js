@@ -1,13 +1,14 @@
 import { createStore } from 'redux'
 import rootReducer from './rootReducer'
 import persistedState from './persistedState'
+import { setTodos, setSettings } from "../db"
 
 const store = createStore(rootReducer, persistedState)
 
 store.subscribe(() => {
 	const { todos, settings } = store.getState()
-  localStorage.setItem("todos", JSON.stringify(todos))
-  localStorage.setItem("settings", JSON.stringify(settings))
+  setTodos(todos)
+  setSettings(settings)
 })
 
 export default store
