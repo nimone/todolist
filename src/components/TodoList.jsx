@@ -26,7 +26,7 @@ function TodoList({ todos }) {
   }
   
 	return (
-    <ul className="w-full text-white rounded-b">
+    <ul className="w-full text-white rounded-b overflow-y-auto max-h-[70vh]">
       {todos.map(todo => (
         todo.id === editTodoId ? (
           <TodoForm
