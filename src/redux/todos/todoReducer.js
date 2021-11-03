@@ -11,6 +11,13 @@ function todoReducer(state = initialState, action) {
 			return [
 				...state,
 				action.payload,
+			]		
+
+		case actionTypes.ADD_TODOS: 
+			console.log([...state, ...action.payload])
+			return [
+				...state,
+				...action.payload,
 			]
 
 		case actionTypes.UPDATE_TODO:

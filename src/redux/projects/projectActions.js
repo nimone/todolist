@@ -7,6 +7,13 @@ export function addProject(project) {
 	}
 }
 
+export function addProjects(projects) {
+	return {
+		type: actionTypes.ADD_PROJECTS,
+		payload: projects
+	}
+}
+
 export function setProjects(projects) {
 	return {
 		type: actionTypes.SET_PROJECTS,

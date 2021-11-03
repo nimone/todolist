@@ -7,6 +7,13 @@ export function addTodo(todo) {
 	}
 }
 
+export function addTodos(todos) {
+	return {
+		type: actionTypes.ADD_TODOS,
+		payload: todos
+	}
+}
+
 export function setTodos(todos) {
 	return {
 		type: actionTypes.SET_TODOS,

@@ -1,12 +1,6 @@
 import actionTypes from './projectTypes'
 
-const initialState = [
-	{
-		id: new Date(),
-		timestamp: new Date(),
-		title: "TodoList",
-	}
-]
+const initialState = []
 
 function projectReducer(state = initialState, action) {
 	switch(action.type) {
@@ -17,6 +11,12 @@ function projectReducer(state = initialState, action) {
 			return [
 				...state,
 				action.payload,
+			]		
+
+		case actionTypes.ADD_PROJECTS: 
+			return [
+				...state,
+				...action.payload,
 			]
 
 		case actionTypes.UPDATE_PROJECT:
