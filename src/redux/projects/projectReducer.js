@@ -5,32 +5,41 @@ const initialState = []
 function projectReducer(state = initialState, action) {
 	switch(action.type) {
 		case actionTypes.SET_PROJECTS:
-			return action.payload
+			const newProjects = {}
+			action.payload.forEach(project => newProjects[project.id] = project)
+
+			return newProjects
 			
 		case actionTypes.ADD_PROJECT: 
-			return [
+			return {
 				...state,
-				action.payload,
-			]		
+				[action.payload.id]: action.payload,
+			}
 
 		case actionTypes.ADD_PROJECTS: 
-			return [
+			const projectsObj = {}
+			action.payload.forEach(project => projectsObj[project.id] = project)
+
+			return {
 				...state,
-				...action.payload,
-			]
+				...projectsObj,
+			}
 
 		case actionTypes.UPDATE_PROJECT:
-      const projectIdx = state.findIndex(p => p.id === action.payload.id)
-      const newState = [...state]
-      newState[projectIdx] = {
-      	...newState[projectIdx],
-      	...action.payload.updates
-      }
+			return {
+				...state,
+				[action.payload.id]: {
+					...state[action.payload.id],
+					...action.payload.updates,
+				},
+			}
 
       return newState
 
     case actionTypes.REMOVE_PROJECT:
-    	return [...state.filter(project => project.id !== action.payload)]
+    	const newState = {...state}
+    	delete newState[action.payload]
+			return newState
 
 		default: return state
 	}

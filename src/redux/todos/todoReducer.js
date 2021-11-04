@@ -1,40 +1,67 @@
 import actionTypes from './todoTypes'
 
-const initialState = []
+const initialState = {}
 
 function todoReducer(state = initialState, action) {
+	let newProject
+
 	switch(action.type) {
 		case actionTypes.SET_TODOS:
 			return action.payload
 			
 		case actionTypes.ADD_TODO: 
-			return [
+			return {
 				...state,
-				action.payload,
-			]		
+				[action.payload.projectID]: {
+					...state[action.payload.projectID],
+					[action.payload.todo.id]: action.payload.todo,
+				}
+			}
 
 		case actionTypes.ADD_TODOS: 
-			console.log([...state, ...action.payload])
-			return [
+		 	const todos = {}
+		 	action.payload.todos.forEach(todo => todos[todo.id] = todo)
+
+			return {
 				...state,
-				...action.payload,
-			]
+				[action.payload.projectID]: {
+					...state[action.payload.projectID],
+					...todos,
+				}
+			}
 
 		case actionTypes.UPDATE_TODO:
-      const todoIdx = state.findIndex(t => t.id === action.payload.id)
-      const newState = [...state]
-      newState[todoIdx] = {
-      	...newState[todoIdx],
-      	...action.payload.updates
-      }
-
-      return newState
+			const { projectID, todoID, updates } = action.payload
+      return {
+      	...state, 
+      	[projectID]: {
+      		...state[projectID],
+      		[todoID]: {
+      			...state[projectID][todoID],
+      			...updates,
+      		},
+      	},
+			}
 
     case actionTypes.REMOVE_TODO:
-    	return [...state.filter(todo => todo.id !== action.payload)]
+    	newProject = {...state[action.payload.projectID]}
+    	delete newProject[action.payload.todoID]
+
+    	return {
+    		...state,
+    		[action.payload.projectID]: newProject,
+    	}
 
     case actionTypes.REMOVE_COMPLETED_TODOS:
-    	return [...state.filter(todo => !todo.completed)]
+    	newProject = {...state[action.payload]}
+			Object.entries(newProject).forEach(([id, todo]) => 
+    		todo.completed && delete newProject[id]
+    	)
+
+    	return {
+    		...state,
+    		[action.payload]: newProject
+    	}
 
 		default: return state
 	}

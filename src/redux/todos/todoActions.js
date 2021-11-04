@@ -1,42 +1,43 @@
 import actionTypes from './todoTypes'
 
-export function addTodo(todo) {
+export function addTodo(projectID, todo) {
 	return {
 		type: actionTypes.ADD_TODO,
-		payload: todo
+		payload: { projectID, todo },
 	}
 }
 
-export function addTodos(todos) {
+export function addTodos(projectID, todos) {
 	return {
 		type: actionTypes.ADD_TODOS,
-		payload: todos
+		payload: { projectID, todos },
 	}
 }
 
 export function setTodos(todos) {
 	return {
 		type: actionTypes.SET_TODOS,
-		payload: todos
+		payload: todos,
 	}
 }
 
-export function updateTodo(id, updates) {
+export function updateTodo(projectID, todoID, updates) {
 	return {
 		type: actionTypes.UPDATE_TODO,
-		payload: {id, updates}
+		payload: {projectID, todoID, updates},
 	}
 }
 
-export function removeTodo(id) {
+export function removeTodo(projectID, todoID) {
 	return {
 		type: actionTypes.REMOVE_TODO,
-		payload: id
+		payload: { projectID, todoID },
 	}
 }
 
-export function removeCompletedTodos() {
+export function removeCompletedTodos(projectID) {
 	return {
-		type: actionTypes.REMOVE_COMPLETED_TODOS
+		type: actionTypes.REMOVE_COMPLETED_TODOS,
+		payload: projectID,
 	}
 }
