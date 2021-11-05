@@ -1,6 +1,6 @@
 import actionTypes from './projectTypes'
 
-const initialState = []
+const initialState = {}
 
 function projectReducer(state = initialState, action) {
 	switch(action.type) {
