@@ -12,7 +12,7 @@ function TodoTask({ todo, onMark, onRemove, onEdit }) {
 			/>
 
 			<span 
-				className={`mx-3 ${todo.completed ? "text-gray-300 line-through" : "cursor-pointer"}`} 
+				className={`overflow-x-hidden overflow-ellipsis mx-3 ${todo.completed ? "text-gray-300 line-through" : "cursor-pointer"}`} 
 				onClick={() => todo.completed ? null : onEdit()}>
       	{todo.task}
 			</span>
