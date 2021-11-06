@@ -4,19 +4,20 @@ import { removeTodo, updateTodo } from '../redux'
 
 import TodoTask from './TodoTask'
 import TodoForm from './TodoForm'
+import Loader from './Loader'
 
-function TodoList({ todos }) {
+function TodoList({ todos, isLoading }) {
   const dispatch = useDispatch()
   const settings = useSelector(state => state.settings)
   const [editTodoId, setEditTodoId] = useState(null)
 
   const handleUpdate = (id, updateObj) => {
-    dispatch(updateTodo(id, updateObj))
+    dispatch(updateTodo(settings.currentProject, id, updateObj))
     setEditTodoId(null)
   }
 
   const handleComplete = (id, completed) => {
-    handleUpdate(id, {completed})
+    handleUpdate(id, { completed })
 
     if (settings.removeCompleted && completed) {
       setTimeout(() => {
@@ -26,8 +27,13 @@ function TodoList({ todos }) {
   }
   
 	return (
-    <ul className="w-full text-white rounded-b overflow-y-auto max-h-[70vh]">
-      {todos.map(todo => (
+    <ul className="w-full text-white rounded-b overflow-y-auto max-h-[70vh] scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-700">
+
+      {isLoading && <div className="bg-gray bg-gray-900/60 min-h-20">
+        <Loader />  
+      </div> 
+      }
+      {!isLoading && todos.map(todo => (
         todo.id === editTodoId ? (
           <TodoForm
             key={todo.id}
@@ -40,7 +46,7 @@ function TodoList({ todos }) {
         		key={todo.id} 
         		todo={todo} 
         		onMark={completed => handleComplete(todo.id, completed)} 
-            onRemove={() => dispatch(removeTodo(todo.id))} 
+            onRemove={() => dispatch(removeTodo(settings.currentProject, todo.id))} 
             onEdit={() => setEditTodoId(todo.id)}
         	/>
         )
