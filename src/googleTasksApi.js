@@ -85,11 +85,14 @@ const googleTasksApi = {
   async listTasks(taskListId) {
     return (
       await this.makeRequest(gapi.client.tasks.tasks.list({
-        tasklist: taskListId
+        tasklist: taskListId,
+        showCompleted: false, 
+        showHidden: true,
+        maxResults: 100,
       }))
     ).items.map(todo => ({
       id: todo.id,
-      completed: false,
+      completed: todo.status === "completed",
       timestamp: new Date(todo.updated),
       task: todo.title,
     }))
