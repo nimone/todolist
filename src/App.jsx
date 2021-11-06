@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { addTodo, addTodos, addProjects, themes } from './redux'
+import { addTodos, addProjects, themes } from './redux'
 import 'virtual:windi.css'
 import googleTasksApi from './googleTasksApi'
+import { handleTodoCreate } from "./todoOperations"
 
 import TodoContainer from './components/TodoContainer'
 import TodoHeader from './components/TodoHeader'
@@ -27,16 +28,6 @@ function App() {
     })
   )
   const dispatch = useDispatch()
-
-  const createTodo = task => {
-    const timestamp = Date.now()
-    dispatch(addTodo(currentProject, {
-      task,
-      timestamp,
-      id: timestamp,
-      completed: false
-    }))
-  }
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -75,7 +66,11 @@ function App() {
             toggleSettings={() => setShowSettings(show => !show)} 
           />
           {showSettings && <TodoSettings />}
-          <TodoForm type="new" task="" onSubmit={createTodo} />
+          <TodoForm 
+            type="new" 
+            task="" 
+            onSubmit={task => handleTodoCreate(currentProject, {task})} 
+          />
           {isLoading ?
             <div className="w-full bg-gray-900/60 min-h-20">
               <Loader />  
