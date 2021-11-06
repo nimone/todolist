@@ -2,6 +2,8 @@ lockfileVersion: 5.3
 
 specifiers:
   '@vitejs/plugin-react-refresh': ^1.3.1
+  '@windicss/plugin-scrollbar': ^1.2.3
+  gapi-script: ^1.2.0
   idb-keyval: ^6.0.3
   react: ^17.0.0
   react-dom: ^17.0.0
@@ -14,6 +16,7 @@ specifiers:
   windicss: ^3.1.7
 
 dependencies:
+  gapi-script: 1.2.0
   idb-keyval: 6.0.3
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
@@ -23,6 +26,7 @@ dependencies:
 
 devDependencies:
   '@vitejs/plugin-react-refresh': 1.3.6
+  '@windicss/plugin-scrollbar': 1.2.3
   vite: 2.5.6
   vite-plugin-pwa: 0.11.2_vite@2.5.6
   vite-plugin-windicss: 1.3.0_vite@2.5.6
@@ -1492,6 +1496,10 @@ packages:
       - typescript
     dev: true
 
+  /@windicss/plugin-scrollbar/1.2.3:
+    resolution: {integrity: sha512-+cqv1pEmaNPITeBJ/lO6tc8IjBzRhQ+V9G8r249MMXivYoxUO4DtModBrRGHVvBgsYZgPXDsIv2jqtxc4NqYEg==}
+    dev: true
+
   /@windicss/plugin-utils/1.3.0:
     resolution: {integrity: sha512-4qOXUStYPI3WTHR6WdxGhzKWMZar7vwWY08QFVc9Zztg5eoQ3GyYsMPn83OSRwc/jA7mSkkoCtHLGzop2KjHcg==}
     dependencies:
@@ -1922,6 +1930,10 @@ packages:
   /function-bind/1.1.1:
     resolution: {integrity: sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A==}
     dev: true
+
+  /gapi-script/1.2.0:
+    resolution: {integrity: sha512-NKTVKiIwFdkO1j1EzcrWu/Pz7gsl1GmBmgh+qhuV2Ytls04W/Eg5aiBL91SCiBM9lU0PMu7p1hTVxhh1rPT5Lw==}
+    dev: false
 
   /gensync/1.0.0-beta.2:
     resolution: {integrity: sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==}
