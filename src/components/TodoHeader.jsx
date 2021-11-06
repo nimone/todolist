@@ -1,28 +1,29 @@
 import React from 'react'
-import { List, Settings } from "react-feather"
+import { List, Settings, Plus } from "react-feather"
 import { useDispatch, useSelector } from 'react-redux'
 
 import { setSortType, sortOptions, setCurrentProject } from '../redux'
 import Select, { Option } from './Select'
+import TodoForm from './TodoForm'
 
-function TodoHeader({ title, toggleSettings }) {
+function TodoHeader({ toggleSettings }) {
   const { sortType, currentProject } = useSelector(state => state.settings)
   const projects = useSelector(state => state.projects)
   const dispatch = useDispatch()
 
 	return (
-    <div className="flex w-full justify-between items-center py-2 px-3 text-white bg-gradient-to-b from-gray-800 to-gray-900 opacity-80 rounded-t shadow-md">
+    <div className="flex w-full justify-between items-center py-2 px-3 text-white bg-gradient-to-b from-gray-800/80 to-gray-900/80 rounded-t shadow-md">
       <List className="mr-3" />
       <div className="mr-auto">
         <Select 
           text={projects[currentProject].title}
-          className="font-bold"
-        > {projects.map((project, idx) => (
+          className="font-bold min-w-36"
+        >
+          {Object.values(projects).map(project => (
             <Option 
               key={project.id}
-              selected={idx === currentProject}
-              onClick={() => dispatch(setCurrentProject(idx))}
-              value={idx}
+              selected={project.id === currentProject}
+              onClick={() => dispatch(setCurrentProject(project.id))}
               text={project.title}
             />
           ))}
@@ -35,7 +36,6 @@ function TodoHeader({ title, toggleSettings }) {
             key={value}
             selected={value === sortType}
             onClick={() => dispatch(setSortType(value))}
-            value={value}
             text={text}
           />
         ))}

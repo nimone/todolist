@@ -8,5 +8,8 @@ export default {
   },
   safelist: [
     Object.values(themes)
+  ],
+  plugins: [
+    require('@windicss/plugin-scrollbar'),
   ]
 }

@@ -6,7 +6,7 @@ import TodoTask from './TodoTask'
 import TodoForm from './TodoForm'
 import Loader from './Loader'
 
-function TodoList({ todos, isLoading }) {
+function TodoList({ todos }) {
   const dispatch = useDispatch()
   const settings = useSelector(state => state.settings)
   const [editTodoId, setEditTodoId] = useState(null)
@@ -28,12 +28,7 @@ function TodoList({ todos, isLoading }) {
   
 	return (
     <ul className="w-full text-white rounded-b overflow-y-auto max-h-[70vh] scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-700">
-
-      {isLoading && <div className="bg-gray bg-gray-900/60 min-h-20">
-        <Loader />  
-      </div> 
-      }
-      {!isLoading && todos.map(todo => (
+      {todos.map(todo => (
         todo.id === editTodoId ? (
           <TodoForm
             key={todo.id}
