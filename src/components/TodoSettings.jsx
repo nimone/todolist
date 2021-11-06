@@ -1,13 +1,30 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Trash } from 'react-feather'
+import { Trash, CloudOff } from 'react-feather'
 
-import { setTheme, setRemoveCompleted, removeCompletedTodos } from '../redux'
+import { setTheme, setRemoveCompleted, removeCompletedTodos, addProjects } from '../redux'
 import { themes } from '../redux'
+import Button from './Button'
+import googleTasksApi from '../googleTasksApi'
 
 function TodoSettings() {
+	const [isSignedIn, setIsSignedIn] = useState(false)
 	const settings = useSelector(state => state.settings)
 	const dispatch = useDispatch()
+
+	useEffect(() => {
+		const checkSignIn = async () => {
+			const signinState = await googleTasksApi.isSignedIn()
+			console.log(signinState)
+			setIsSignedIn(signinState)
+		}
+		checkSignIn()
+	}, [])
+
+	const syncGoogleTasks = async () => {
+		await googleTasksApi.signIn()
+  	dispatch(addProjects(await googleTasksApi.listTaskLists()))
+	}
 
 	return (
 		<div className="flex flex-col w-full justify-start items-center py-2 px-3 text-white bg-gray-900/80 shadow-sm">
@@ -22,7 +39,9 @@ function TodoSettings() {
 					/>
 				))}
 			</SettingSection>
-			<SettingSection title="Remove Completed">
+			
+		{/* May not work now with the Google Tasks API */}
+{/*			<SettingSection title="Remove Completed">
 		    <input 
 		    	type="checkbox" 
 		    	className="cursor-pointer min-h-6 min-w-6" 
@@ -30,13 +49,26 @@ function TodoSettings() {
 					defaultChecked={settings.removeCompleted}
 		    />
 		    {settings.removeCompleted && (
-		    	<div 
+		    	<Button 
 		    		onClick={() => dispatch(removeCompletedTodos())}
-		    		className="flex ml-3 border-1 border-red-400 bg-red-400/10 px-2 py-1 cursor-pointer rounded">
-		    		<Trash className="mr-1 text-red-400" title="Remove now" />
+		    		className="ml-3 border-1 border-red-400">
+		    		<Trash className="w-5 h-5 mr-2 text-red-400" title="Remove now" />
 		    		<p>Remove now</p>
-		    	</div>
+		    	</Button>
 		    )}
+			</SettingSection>*/}
+			<SettingSection>
+      {isSignedIn ? (
+        <Button onClick={googleTasksApi.logout}>
+        	<CloudOff className="w-5 h-5 mr-2" />
+        	<span>Unsync with Tasks</span>
+        </Button>
+      ) : (
+        <Button onClick={syncGoogleTasks}>
+          <img className="w-5 h-5 mr-2" src="https://raw.githubusercontent.com/AliasIO/wappalyzer/master/src/drivers/webextension/images/icons/Google.svg" />
+          <span>Sync with Tasks</span>
+        </Button>
+      )}
 			</SettingSection>
 		</div>
 	)
