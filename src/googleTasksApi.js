@@ -57,6 +57,7 @@ const googleTasksApi = {
       await this.makeRequest(gapi.client.tasks.tasklists.list())
     ).items.map(taskList => ({
       id: taskList.id,
+      synced: true,
       timestamp: new Date(taskList.updated),
       title: taskList.title
     }))

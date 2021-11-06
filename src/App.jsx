@@ -27,6 +27,7 @@ function App() {
       }
     })
   )
+  const projects = useSelector(state => state.projects)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -38,11 +39,16 @@ function App() {
         console.log("Not signed in")
       }
     }
-    googleTasksApi.authorize(fetchProjects)
+    googleTasksApi.authorize(
+      fetchProjects, 
+      err => console.log("authorize failed:", err.message),
+    )
   }, [])
 
   useEffect(() => {
     const fetchCurrentProjectTodos = async () => {
+      // if project is not synced with google tasks don't proceed
+      if (!projects[currentProject].synced) return
       // set loading to true only when todos are not cached
       !todos.length && setIsLoading(true)
 
@@ -68,7 +74,6 @@ function App() {
           {showSettings && <TodoSettings />}
           <TodoForm 
             type="new" 
-            task="" 
             onSubmit={task => handleTodoCreate(currentProject, {task})} 
           />
           {isLoading ?

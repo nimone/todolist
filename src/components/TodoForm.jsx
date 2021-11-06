@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Edit2, Plus, Check } from 'react-feather'
 
-function TodoForm({ task, onSubmit, type }) {
+function TodoForm({ task="", onSubmit, type }) {
 	const [todoTask, setTodoTask] = useState(task)
 
 	const handleSubmit = e => {
