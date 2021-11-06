@@ -58,7 +58,7 @@ const googleTasksApi = {
     ).items.map(taskList => ({
       id: taskList.id,
       synced: true,
-      timestamp: new Date(taskList.updated),
+      timestamp: new Date(taskList.updated).getTime(),
       title: taskList.title
     }))
   },
@@ -94,7 +94,7 @@ const googleTasksApi = {
     ).items.map(todo => ({
       id: todo.id,
       completed: todo.status === "completed",
-      timestamp: new Date(todo.updated),
+      timestamp: new Date(todo.updated).getTime(),
       task: todo.title,
     }))
   },
