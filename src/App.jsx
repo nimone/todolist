@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { addTodos, addProjects, themes } from './redux'
+import { addTodos, addProjects, themes, setCurrentProject } from './redux'
 import 'virtual:windi.css'
 import googleTasksApi from './googleTasksApi'
 import { handleTodoCreate } from "./todoOperations"
@@ -12,8 +12,10 @@ import TodoSettings from './components/TodoSettings'
 import TodoForm from './components/TodoForm'
 import Button from "./components/Button"
 import Loader from "./components/Loader"
+import ProjectList from "./components/ProjectList"
 
 function App() {
+  const [showProjectList, setShowProjectList] = useState(false)
   const [showSettings, setShowSettings] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const { currentTheme, sortType, currentProject } = useSelector(state => state.settings)
@@ -69,6 +71,7 @@ function App() {
       <div className="max-w-4xl mx-auto py-6 px-4 sm:p-10">
         <TodoContainer>
           <TodoHeader 
+            toggleProjectList={() => setShowProjectList(prev => !prev)}
             toggleSettings={() => setShowSettings(show => !show)} 
           />
           {showSettings && <TodoSettings />}
@@ -82,7 +85,12 @@ function App() {
             </div> 
             : <TodoList todos={todos} />
           }
-
+          {showProjectList && 
+            <ProjectList 
+              handleSelect={projectID => dispatch(setCurrentProject(projectID))}
+              handleClose={() => setShowProjectList(false)} 
+            />
+          }
         </TodoContainer>
       </div>
     </div>
