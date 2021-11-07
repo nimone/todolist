@@ -6,10 +6,36 @@ import TodoTask from './TodoTask'
 import TodoForm from './TodoForm'
 import Loader from './Loader'
 
-function TodoList({ todos }) {
-  const projectID = useSelector(state => state.settings.currentProject)
+function TodoList() {
   const [editTodoId, setEditTodoId] = useState(null)
-  
+  const {
+    currentProject, 
+    sortType, 
+    showCompleted
+  } = useSelector(state => state.settings)
+
+  const todos = useSelector(state => {
+    const todoArray = [...Object.values(state.todos[currentProject] || [])]
+    todoArray.sort((a, b) => {
+      switch(sortType){
+        case "newest": return b.timestamp - a.timestamp
+        case "oldest": return a.timestamp - b.timestamp 
+        default: return 0
+      }
+    })
+    const completedTodos = []
+    const uncompletedTodos = todoArray.filter(todo => {
+      if (!todo.completed) return true
+      completedTodos.push(todo)
+      return false
+    })
+
+    return [
+      ...uncompletedTodos, 
+      ...(showCompleted ? completedTodos : [])
+    ]
+  })
+
 	return (
     <ul className="w-full text-white rounded-b overflow-y-auto max-h-[70vh] scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-700">
       {todos.map(todo => (
@@ -19,7 +45,7 @@ function TodoList({ todos }) {
             type="edit" 
             task={todo.task} 
             onSubmit={task => {
-              handleTaskEdit(projectID, todo.id, { task })
+              handleTaskEdit(currentProject, todo.id, { task })
               setEditTodoId(null)
             }}
           />
@@ -28,12 +54,12 @@ function TodoList({ todos }) {
         		key={todo.id} 
         		todo={todo} 
         		onMark={completed =>
-              handleTodoComplete(projectID, todo.id, {
+              handleTodoComplete(currentProject, todo.id, {
                 task:todo.task, 
                 completed,
               }) 
             }
-            onRemove={() => handleTodoRemove(projectID, todo.id)} 
+            onRemove={() => handleTodoRemove(currentProject, todo.id)} 
             onEdit={() => setEditTodoId(todo.id)}
         	/>
         )

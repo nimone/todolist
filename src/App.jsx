@@ -18,17 +18,16 @@ function App() {
   const [showProjectList, setShowProjectList] = useState(false)
   const [showSettings, setShowSettings] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const { currentTheme, sortType, currentProject } = useSelector(state => state.settings)
-  const todos = useSelector(state => 
-    [...Object.values(state.todos[currentProject] || [])]
-    .sort((a, b) => {
-      switch(sortType){
-        case "newest": return b.timestamp - a.timestamp
-        case "oldest": return a.timestamp - b.timestamp 
-        default: return 0
-      }
-    })
-  )
+  const { 
+    currentTheme,
+    currentProject, 
+    showCompleted,
+  } = useSelector(state => state.settings)
+  const isTodosCached = useSelector(state => {
+    for (const i in state.todos[currentProject]) 
+      return true
+    return false
+  })
   const projects = useSelector(state => state.projects)
   const dispatch = useDispatch()
 
@@ -52,10 +51,13 @@ function App() {
       // if project is not synced with google tasks don't proceed
       if (!projects[currentProject].synced) return
       // set loading to true only when todos are not cached
-      !todos.length && setIsLoading(true)
+      !isTodosCached && setIsLoading(true)
 
       try {
-        const todos = await googleTasksApi.listTasks(currentProject)
+        const todos = await googleTasksApi.listTasks(
+          currentProject, 
+          { showCompleted }
+        )
         dispatch(addTodos(currentProject, todos))
       } catch (err) {
         console.log("Not signed in")
@@ -63,7 +65,7 @@ function App() {
       setIsLoading(false)
     } 
     fetchCurrentProjectTodos()
-  }, [currentProject])
+  }, [currentProject, showCompleted])
 
 
   return (
@@ -83,7 +85,7 @@ function App() {
             <div className="w-full bg-gray-900/60 min-h-20">
               <Loader />  
             </div> 
-            : <TodoList todos={todos} />
+            : <TodoList />
           }
           {showProjectList && 
             <ProjectList 
