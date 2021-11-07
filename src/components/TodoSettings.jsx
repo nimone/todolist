@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Trash, CloudOff } from 'react-feather'
 
-import { setTheme, setRemoveCompleted, removeCompletedTodos, addProjects } from '../redux'
+import { setTheme, setRemoveCompleted, setShowCompleted, removeCompletedTodos, addProjects } from '../redux'
 import { themes } from '../redux'
 import Button from './Button'
 import googleTasksApi from '../googleTasksApi'
@@ -57,6 +57,14 @@ function TodoSettings() {
 		    	</Button>
 		    )}
 			</SettingSection>*/}
+			<SettingSection title="Show Completed">
+				<input 
+		    	type="checkbox" 
+		    	className="cursor-pointer min-h-6 min-w-6" 
+		    	onClick={e => dispatch(setShowCompleted(e.target.checked))}
+					defaultChecked={settings.showCompleted}
+		    />
+			</SettingSection>
 			<SettingSection>
       {isSignedIn ? (
         <Button onClick={googleTasksApi.logout}>

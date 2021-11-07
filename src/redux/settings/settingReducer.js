@@ -14,6 +14,12 @@ function settingReducer(state = {}, action) {
 				removeCompleted: action.payload
 			}
 
+		case actionTypes.SET_SHOW_COMPLETED:
+			return {
+				...state,
+				showCompleted: action.payload
+			}
+
 		case actionTypes.SET_SORT_TYPE:
 			return {
 				...state,

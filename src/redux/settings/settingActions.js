@@ -14,6 +14,13 @@ export function setRemoveCompleted(bool) {
 	}
 }
 
+export function setShowCompleted(bool) {
+	return {
+		type: actionTypes.SET_SHOW_COMPLETED,
+		payload: bool,
+	}
+}
+
 export function setSortType(sortType) {
 	return {
 		type: actionTypes.SET_SORT_TYPE,

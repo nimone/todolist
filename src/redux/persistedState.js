@@ -14,7 +14,8 @@ const persistedState = {
 		currentTheme: 0,
 		sortType: "newest",
 		currentProject: 0,
-		removeCompleted: false
+		removeCompleted: false,
+		showCompleted: false,
 	},
 }
 
