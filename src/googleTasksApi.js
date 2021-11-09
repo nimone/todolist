@@ -1,4 +1,6 @@
 import { gapi } from "gapi-script"
+import store from "./redux/store"
+import { setSignedIn } from './redux'
 
 // Client ID and API key from the Developer Console
 const CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID
@@ -40,11 +42,16 @@ const googleTasksApi = {
     }).then(() => {
       successFn()
       gapi.auth2.getAuthInstance().isSignedIn
-        .listen(status => console.log("Is signed in?", status))
+        .listen(status => {
+          // Handle the initial sign-in state.
+          console.log("Signin Successful?", status)
+          store.dispatch(setSignedIn(status))
+        })
 
-      // Handle the initial sign-in state.
+      // handle signin state changes
       const isSignedIn = gapi.auth2.getAuthInstance().isSignedIn.get()
-      console.log("Signin Successful?", isSignedIn)
+      console.log("Is signed in?", isSignedIn)
+      store.dispatch(setSignedIn(isSignedIn))
 
     }, error => {
       failureFn(error)

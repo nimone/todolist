@@ -32,6 +32,12 @@ function settingReducer(state = {}, action) {
 				currentProject: action.payload
 			}
 
+		case actionTypes.SET_SIGNED_IN:
+			return {
+				...state,
+				isSignedIn: action.payload
+			}
+
 		default: return state
 	}
 }

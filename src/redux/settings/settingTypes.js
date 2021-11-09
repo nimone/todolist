@@ -4,6 +4,7 @@ export const actionTypes = {
 	SET_REMOVE_COMPLETED: "SET_REMOVE_COMPLETED",
 	SET_SHOW_COMPLETED: "SET_SHOW_COMPLETED",
 	SET_SORT_TYPE: "SET_SORT_TYPE",
+	SET_SIGNED_IN: "SET_SIGNED_IN",
 }
 
 export const themes = {

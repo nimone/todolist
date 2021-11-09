@@ -34,3 +34,10 @@ export function setCurrentProject(newProject) {
 		payload: newProject
 	}
 }
+
+export function setSignedIn(bool) {
+	return {
+		type: actionTypes.SET_SIGNED_IN,
+		payload: bool
+	}
+}

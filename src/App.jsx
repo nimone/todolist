@@ -22,6 +22,7 @@ function App() {
     currentTheme,
     currentProject, 
     showCompleted,
+    isSignedIn,
   } = useSelector(state => state.settings)
   const isTodosCached = useSelector(state => {
     for (const i in state.todos[currentProject]) 
@@ -49,7 +50,7 @@ function App() {
   useEffect(() => {
     const fetchCurrentProjectTodos = async () => {
       // if project is not synced with google tasks don't proceed
-      if (!projects[currentProject].synced) return
+      if (!isSignedIn || !projects[currentProject].synced) return
       // set loading to true only when todos are not cached
       !isTodosCached && setIsLoading(true)
 

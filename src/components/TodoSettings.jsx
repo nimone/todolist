@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Trash, CloudOff } from 'react-feather'
 
@@ -8,18 +8,8 @@ import Button from './Button'
 import googleTasksApi from '../googleTasksApi'
 
 function TodoSettings() {
-	const [isSignedIn, setIsSignedIn] = useState(false)
 	const settings = useSelector(state => state.settings)
 	const dispatch = useDispatch()
-
-	useEffect(() => {
-		const checkSignIn = async () => {
-			const signinState = await googleTasksApi.isSignedIn()
-			console.log(signinState)
-			setIsSignedIn(signinState)
-		}
-		checkSignIn()
-	}, [])
 
 	const syncGoogleTasks = async () => {
 		await googleTasksApi.signIn()
@@ -66,7 +56,7 @@ function TodoSettings() {
 		    />
 			</SettingSection>
 			<SettingSection>
-      {isSignedIn ? (
+      {settings.isSignedIn ? (
         <Button onClick={googleTasksApi.logout}>
         	<CloudOff className="w-5 h-5 mr-2" />
         	<span>Unsync with Tasks</span>

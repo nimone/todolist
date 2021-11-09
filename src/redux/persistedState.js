@@ -16,6 +16,7 @@ const persistedState = {
 		currentProject: 0,
 		removeCompleted: false,
 		showCompleted: false,
+		isSignedIn: false,
 	},
 }
 
