@@ -1,19 +1,27 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Search } from "react-feather"
+import { Plus } from "react-feather"
+
+import { setCurrentProject } from "../redux"
+import { handleProjectCreate, handleProjectRemove, handleProjectEdit } from '../projectOperations'
+import ProjectForm from "./ProjectForm"
+import Project from "./Project"
 
 export default function ProjectList({ handleSelect, handleClose }) {
-	const projects = useSelector(state => Object.values(state.projects))
+	const projects = useSelector(state =>
+		[...Object.values(state.projects)]
+		.sort((a, b) => b.timestamp - a.timestamp)
+	)
+	const {currentProject} = useSelector(state => state.settings)
 	const dispatch = useDispatch()
-	const [filteredProjects, setFilteredProjects] = useState(projects)
-	const [search, setSearch] = useState("")
 
-	useEffect(() => {
-		setFilteredProjects(
-			projects.filter(project => 
-				project.title.toLowerCase().includes(search.toLowerCase())
-		))
-	}, [search])
+	const [search, setSearch] = useState("")
+	const [showNewProjectForm, setShowNewProjectForm] = useState(false)
+	const [editProjectID, setEditProjectID] = useState(null)
+
+	const filteredProjects = projects.filter(project => 
+		project.title.toLowerCase().includes(search.toLowerCase())
+	)
 
 	// close with Esc
  	useEffect(() => {
@@ -24,11 +32,22 @@ export default function ProjectList({ handleSelect, handleClose }) {
 	  return () => window.removeEventListener('keydown', close)
   },[])
 
-	// on enter key select the first filtered project
-	const handleSubmit = e => {
-		e.preventDefault()
-		handleSelect(filteredProjects[0].id)
-		handleClose()
+	const createNewProject = title => {
+		if (title.length === 0) return
+		handleProjectCreate(title)
+
+		setShowNewProjectForm(false)
+	}
+
+	const removeProject = projectID => {
+		if (projectID === currentProject)
+			dispatch(setCurrentProject(0))
+		handleProjectRemove(projectID)
+	}
+
+	const editProject = (projectID, title) => {
+		handleProjectEdit(projectID, title)
+		setEditProjectID(null)
 	}
 
 	const select = projectID => {
@@ -47,34 +66,55 @@ export default function ProjectList({ handleSelect, handleClose }) {
 			className="fixed inset-0 w-full h-screen flex items-center z-40 bg-black bg-opacity-75"
 		>
 			<div className="relative max-w-3xl mx-auto rounded bg-gray-800/95 text-gray-300">
-
-				<form onSubmit={handleSubmit} className="p-2 shadow">
-					<div className="flex items-center">
-						<Search className="w-5 h-5 mr-2" />
-						<input
-							className="bg-transparent border-none outline-none text-xl placeholder-gray-600" 
-							type="text" 
-							placeholder="Search Projects" 
-							value={search}
-							onChange={e => setSearch(e.target.value)}
-							autoFocus
-						/>
-					</div>
-				</form>
-				<section className="h-[70vh] scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-700 divide-y divide-gray-700">
+				<ProjectForm 
+					type="search"
+					placeholder="Search Project"
+					value={search}
+					onChange={setSearch}
+					// on enter key select the first filtered project
+					onSubmit={value => select(filteredProjects[0].id)}
+				/>
+				<ul className="h-[70vh] scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-700 divide-y divide-gray-700">
 					{filteredProjects.map(project => (
-						<div 
-							key={project.id} 
-							onClick={() => select(project.id)}
-							className="flex justify-between p-2 cursor-pointer transition-color duration-100 hover:(bg-gray-700/20 border-l-2 border-gray-700)"
-						>
-							<span className="text-sm">
-								<h4 className="text-lg">{project.title}</h4>
-								<p className="text-gray-600">{new Date(project.timestamp).toLocaleString()}</p>
-							</span>
-						</div>
+						project.id === editProjectID ? (
+							<ProjectForm 
+								key={project.id}
+								type="edit"
+								value={project.title}
+								onSubmit={title => editProject(project.id, title)}
+							/>
+						) : (
+							<Project 
+								key={project.id}
+								id={project.id}
+								title={project.title}
+								timestamp={project.timestamp}
+								onSelect={() => select(project.id)}
+								onEdit={() => setEditProjectID(project.id)}
+								onRemove={() => removeProject(project.id)}
+							/>
+						)
 					))}
-				</section>
+				</ul>
+
+				<div className="shadow bg-gray-900/20">
+				{showNewProjectForm ? (
+					<ProjectForm 
+						type="new"
+						placeholder="Project Name"
+						onSubmit={createNewProject}
+						onClose={() => setShowNewProjectForm(false)}
+					/>
+				) : ( 
+					<button 
+						className="w-full flex items-center justify-center p-2 text-xl  focus:outline-none"
+						onClick={() => setShowNewProjectForm(prev => !prev)}
+					>
+						<Plus className="mr-2" />
+						<span>New Project</span>
+					</button>
+				)}
+				</div>
 			</div>
 		</div>
 	)
