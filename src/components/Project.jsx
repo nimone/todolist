@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { Trash, Edit2 } from "react-feather"
+import { Trash, Edit2, RefreshCw } from "react-feather"
 
-export default function Project({ id, title, timestamp, onSelect, onEdit, onRemove }) {
+export default function Project({ id, title, timestamp, synced, onSelect, onEdit, onRemove }) {
 	const [showConfirmDelete, setShowConfirmDelete] = useState(false)
 
 	return (
@@ -10,7 +10,10 @@ export default function Project({ id, title, timestamp, onSelect, onEdit, onRemo
 				className="text-sm flex-1 cursor-pointer" 
 				onClick={onSelect}
 			>
-				<h4 className="text-lg">{title}</h4>
+				<h4 className="text-lg">
+					{title} 
+					{synced && <RefreshCw className="w-4 h-4 ml-2 text-gray-600" />}
+				</h4>
 				<p className="opacity-30">{new Date(timestamp).toLocaleString()}</p>
 			</span>
 			{showConfirmDelete ? (

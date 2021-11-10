@@ -7,7 +7,13 @@ function todoReducer(state = initialState, action) {
 
 	switch(action.type) {
 		case actionTypes.SET_TODOS:
-			return action.payload
+		 	const newTodos = {}
+		 	action.payload.todos.forEach(todo => newTodos[todo.id] = todo)
+
+			return {
+				...state,
+				[action.payload.projectID]: newTodos,
+			}
 			
 		case actionTypes.ADD_TODO: 
 			return {

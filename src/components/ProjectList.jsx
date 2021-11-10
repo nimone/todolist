@@ -89,6 +89,7 @@ export default function ProjectList({ handleSelect, handleClose }) {
 								id={project.id}
 								title={project.title}
 								timestamp={project.timestamp}
+								synced={project.synced}
 								onSelect={() => select(project.id)}
 								onEdit={() => setEditProjectID(project.id)}
 								onRemove={() => removeProject(project.id)}

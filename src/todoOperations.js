@@ -1,6 +1,6 @@
 import googleTasksApi from "./googleTasksApi"
 import store from "./redux/store"
-import { addTodo, updateTodo, removeTodo } from './redux'
+import { addTodo, updateTodo, removeTodo, setTodos } from './redux'
 import { handleProjectUpdate } from "./projectOperations"
 
 const isSignedIn = () => 
@@ -96,4 +96,77 @@ export const handleTodoComplete = (projectID, todoID, {task, completed}) => {
       handleProjectUpdate(projectID, { synced: false })
     }
   }
+}
+
+export const handleTodosSync = async (projectID, override, { showCompleted }) => {
+  if (!isSignedIn()) return false
+  if (isProjectSynced(projectID)) return true
+
+  const localTodos = store.getState().todos[projectID]
+  const syncedTodos = {};
+  
+  try {
+    const todos = await googleTasksApi.listTasks(
+      projectID, 
+      { showCompleted }
+    )
+    todos.forEach(todo => syncedTodos[todo.id] = todo)
+  } catch (err) {
+    console.log(err)
+    return false
+  }
+
+  const newLocalTodos = {...localTodos}
+  const resolvedConflictingTodos = []
+
+  for (const tid in localTodos) {
+    const localTodo = localTodos[tid]
+    const syncedTodo = syncedTodos[tid]
+
+    if (!syncedTodo) {
+      // todo doesn't exist on google tasks, so create it
+      const {id, title, updated} = await googleTasksApi.insertTask({
+        taskListId: projectID,
+        title: localTodo.task,
+      })
+      // localTodo.completed && await googleTasksApi.updateTask({
+      //   taskListId: projectID,
+      //   taskId: id,
+      //   title: localTodo.task,
+      //   status: "completed",
+      // })
+
+      resolvedConflictingTodos.push({
+        id,
+        completed: localTodo.completed,
+        timestamp: new Date(updated).getTime(),
+        task: title,
+      })
+      delete newLocalTodos[tid]
+    }
+    else if (
+      syncedTodo.completed !== localTodos.completed
+      || syncedTodo.title !== localTodos.title
+    ) {
+      // todo contains unsynced changes
+      if (override) { // override google tasks changes
+        googleTasksApi.updateTask({
+          taskListId: projectID,
+          taskId: tid,
+          title: localTodo.task,
+          status: localTodo.completed ? "completed" : "needsAction",
+        })
+      } else { // accept google tasks changes & delete the local one
+        delete newLocalTodos[tid]
+      }
+    }
+  }
+
+  store.dispatch(setTodos(projectID, [
+    ...Object.values({...newLocalTodos, ...syncedTodos}), 
+    ...resolvedConflictingTodos,
+  ]))
+  handleProjectUpdate(projectID, { synced: true })
+
+  return true
 }

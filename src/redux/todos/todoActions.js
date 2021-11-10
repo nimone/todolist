@@ -14,10 +14,10 @@ export function addTodos(projectID, todos) {
 	}
 }
 
-export function setTodos(todos) {
+export function setTodos(projectID, todos) {
 	return {
 		type: actionTypes.SET_TODOS,
-		payload: todos,
+		payload: { projectID, todos },
 	}
 }
 
