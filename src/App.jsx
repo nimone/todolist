@@ -13,6 +13,7 @@ import TodoForm from './components/TodoForm'
 import Button from "./components/Button"
 import Loader from "./components/Loader"
 import ProjectList from "./components/ProjectList"
+import Footer from "./components/Footer"
 
 function App() {
   const [showProjectList, setShowProjectList] = useState(false)
@@ -70,7 +71,7 @@ function App() {
 
 
   return (
-    <div className={`App min-h-screen bg-gradient-to-br ${themes[currentTheme]}`}>
+    <div className={`App relative min-h-screen bg-gradient-to-br ${themes[currentTheme]}`}>
       <div className="max-w-4xl mx-auto py-6 px-4 sm:p-10">
         <TodoContainer>
           <TodoHeader 
@@ -96,6 +97,7 @@ function App() {
           }
         </TodoContainer>
       </div>
+      <Footer />
     </div>
   )
 }
