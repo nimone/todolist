@@ -15,5 +15,9 @@ export default defineConfig({
         description: 'A simple, pretty, and actually useful todolist that privately stores your data.',
       }
     })
-  ]
+  ],
+  build: {
+    minify: "esbuild",
+    target: "esnext",
+  }
 })
