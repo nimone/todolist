@@ -1,15 +1,16 @@
 # [Todolist](https://react-todolist.pages.dev/) 📝
-A simple but actually useful todolist with a user-friendly interface inspired from todoist.
+A simple and accessible Google Tasks client with a beautiful interface inspired from todoist. It can also act as a stand alone todolist (without Google Tasks sync).
 
-**Desktop:**
-![Desktop screenshot](https://i.ibb.co/HY5KL3W/Screenshot-from-2021-09-14-12-27-46.png)
+**Todos:**
+![Todos screenshot](https://i.ibb.co/cTtGML0/Screenshot-from-2021-11-11-13-48-26.png)
 
-**Mobile:**
-![Mobile screenshot](https://i.ibb.co/CQvmLjc/Screenshot-20210914-123209.jpg)
+**Projects:**
+![Projects screenshot](https://i.ibb.co/j35gyVz/Screenshot-from-2021-11-11-13-51-14.png)
 
 ---
 ## Features 🌟
-- Stores your data privately in the browser's local storage (can be used offline).
+- Sync all your todos and projects with Google Tasks.
+- Stores your data securely in your browser's inbuilt Indexed Database.
 - Multiple theme options to customize it to your liking (currently 8 themes).
 - Useful sorting options (currently 2 i.e. Newest First or Oldest First).
 - Simple & pretty interface - create, edit & delete just the way you expect.
@@ -23,7 +24,7 @@ A simple but actually useful todolist with a user-friendly interface inspired fr
 - [Vite](https://vitejs.dev/) - Frontend Tooling
 
 ---
-## Run Locally
+## Build yourself
 1. Clone this repo
 ```bash
 git clone https://github.com/nimone/todolist && cd todolist
@@ -32,7 +33,12 @@ git clone https://github.com/nimone/todolist && cd todolist
 ```bash
 npm install
 ```
-3. Build the project and start a local server
+3. Create `.env.local` file to store the [Google client ID & API key](https://developers.google.com/tasks/firstapp#register-your-project)
+```
+VITE_GOOGLE_CLIENT_ID=<client-id>
+VITE_GOOGLE_API_KEY=<api-key>
+```
+4. Build the project and start a local server
 ```bash
 npm run build && npm run serve
 ```
