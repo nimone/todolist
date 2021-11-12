@@ -11,7 +11,7 @@ const persistedState = {
 		}
 	},
 	settings: await getSettings() || {
-		currentTheme: 0,
+		currentTheme: "randomImage",
 		sortType: "newest",
 		currentProject: 0,
 		removeCompleted: false,

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Trash, CloudOff } from 'react-feather'
+import { Trash, CloudOff, Aperture } from 'react-feather'
 
 import { setTheme, setRemoveCompleted, setShowCompleted, removeCompletedTodos, addProjects } from '../redux'
 import { themes } from '../redux'
@@ -18,15 +18,15 @@ function TodoSettings() {
 
 	return (
 		<div className="flex flex-col w-full justify-start items-center py-2 px-3 text-white bg-gray-900/80 shadow-sm">
-			{/*<h3 className="text-md font-bold">Settings</h3>*/}
 			<SettingSection title="Themes:">
 				{Object.entries(themes).map(([id, theme]) => (
 					<ThemedButton 
 						key={id}
-						theme={theme}
+						theme={id === "randomImage" ? "" : theme}
 						selected={settings.currentTheme === id}
 						onClick={() => dispatch(setTheme(id))}
-					/>
+					>{id === "randomImage" && <Aperture />}
+					</ThemedButton>
 				))}
 			</SettingSection>
 			
@@ -81,10 +81,11 @@ function SettingSection({ title, ...props }) {
 	)
 }
 
-function ThemedButton({ theme, onClick: handleClick, selected }) {
+function ThemedButton({ children, theme="", selected, ...props }) {
 	return <button 
-			className={`w-6 h-6 m-1 focus:outline-none rounded-full bg-gradient-to-br ${theme} ${selected ? "ring-2 ring-white/80" : ""}`} 
-			onClick={handleClick}
-		/>
+			className={`w-6 h-6 m-1 focus:outline-none rounded-full ${theme ? "bg-gradient-to-br" : ""} ${theme} ${selected ? "ring-2 ring-white/80" : ""}`} 
+			{...props}>
+			{children}
+		</button>
 }
 export default TodoSettings

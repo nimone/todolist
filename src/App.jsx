@@ -71,7 +71,7 @@ function App() {
 
 
   return (
-    <div className={`App relative min-h-screen bg-gradient-to-br ${themes[currentTheme]}`}>
+    <div className={`App relative min-h-screen ${currentTheme === "randomImage" ? "" : "bg-gradient-to-br"} ${themes[currentTheme]}`}>
       <div className="max-w-4xl mx-auto py-6 px-4 sm:p-10">
         <TodoContainer>
           <TodoHeader 
