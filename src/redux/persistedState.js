@@ -1,8 +1,8 @@
 import { getTodos, getSettings, getProjects } from "../db"
 
-const persistedState = {
-	todos: await getTodos() || {},
-	projects: await getProjects() || {
+export const initialState = {
+	todos: {},
+	projects: {
 		0: {
 			id: 0,
 			synced: false,
@@ -10,7 +10,7 @@ const persistedState = {
 			title: "TodoList",
 		}
 	},
-	settings: await getSettings() || {
+	settings: {
 		currentTheme: "randomImage",
 		sortType: "newest",
 		currentProject: 0,
@@ -18,6 +18,12 @@ const persistedState = {
 		showCompleted: false,
 		isSignedIn: false,
 	},
+}
+
+const persistedState = {
+	todos: await getTodos() || initialState.todos,
+	projects: await getProjects() || initialState.projects,
+	settings: await getSettings() || initialState.settings,
 }
 
 export default persistedState

@@ -67,6 +67,13 @@ function TodoSettings() {
           <span>Sync with Tasks</span>
         </Button>
       )}
+      	<Button 
+      		onClick={() => dispatch({type: "CLEAR_STORE"})}
+      		className="ml-3 border-1 border-red-400"
+    		>
+	    		<Trash className="w-5 h-5 mr-2 text-red-400" title="Remove now" />
+	    		<p>Reset & Clear cache</p>
+      	</Button>
 			</SettingSection>
 		</div>
 	)
