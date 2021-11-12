@@ -19,7 +19,7 @@ function TodoHeader({ toggleSettings, toggleProjectList }) {
           onClick={toggleProjectList}
           className="flex items-center focus:outline-none"
         >
-          {projects[currentProject].title} 
+          <h3 className="font-medium">{projects[currentProject].title}</h3> 
           <Code className="transform rotate-90 w-5 h-5 ml-2" />
         </button>
       </div>

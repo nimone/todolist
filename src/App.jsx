@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { addTodos, addProjects, themes, setCurrentProject } from './redux'
+import { setTodos, addProjects, themes, setCurrentProject } from './redux'
 import 'virtual:windi.css'
 import googleTasksApi from './googleTasksApi'
 import { handleTodoCreate } from "./todoOperations"
@@ -60,7 +60,7 @@ function App() {
           currentProject, 
           { showCompleted }
         )
-        dispatch(addTodos(currentProject, todos))
+        dispatch(setTodos(currentProject, todos))
       } catch (err) {
         console.log("Not signed in")
       } 

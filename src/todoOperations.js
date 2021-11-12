@@ -11,7 +11,7 @@ const isProjectSynced = projectID =>
 
 
 export const handleTodoCreate = async (projectID, { task }) => {
-  if (isSignedIn()) {
+  if (isSignedIn() && isProjectSynced(projectID)) {
     const {id, title, updated} = await googleTasksApi.insertTask({
       taskListId: projectID,
       title: task,
@@ -46,7 +46,7 @@ export const handleTodoUpdate = (projectID, todoID, updateObj) => {
 export const handleTodoRemove = (projectID, todoID) => {
   store.dispatch(removeTodo(projectID, todoID))
 
-  if (isSignedIn()) {
+  if (isSignedIn() && isProjectSynced(projectID)) {
     googleTasksApi.deleteTask({
       taskListId: projectID,
       taskId: todoID,
@@ -61,7 +61,7 @@ export const handleTodoRemove = (projectID, todoID) => {
 export const handleTaskEdit = (projectID, todoID, { task }) => {
   handleTodoUpdate(projectID, todoID, { task })
 
-  if (isSignedIn()) {
+  if (isSignedIn() && isProjectSynced(projectID)) {
     googleTasksApi.updateTask({
       taskListId: projectID,
       taskId: todoID,
@@ -83,7 +83,7 @@ export const handleTodoComplete = (projectID, todoID, {task, completed}) => {
   //   }, 500)
   // }
   
-  if (isSignedIn()) {
+  if (isSignedIn() && isProjectSynced(projectID)) {
     googleTasksApi.updateTask({
       taskListId: projectID,
       taskId: todoID,

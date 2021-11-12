@@ -3,6 +3,7 @@ import { Trash, Edit2, RefreshCw } from "react-feather"
 
 export default function Project({ id, title, timestamp, synced, onSelect, onEdit, onRemove }) {
 	const [showConfirmDelete, setShowConfirmDelete] = useState(false)
+	const isDeletable = id !== 0 
 
 	return (
 		<li className={`flex items-center p-2 transition-color duration-100 hover:(filter brightness-110 border-l-2 border-gray-700) group ${showConfirmDelete ? "bg-red-700" : "bg-gray-800"}`}>
@@ -16,7 +17,7 @@ export default function Project({ id, title, timestamp, synced, onSelect, onEdit
 				</h4>
 				<p className="opacity-30">{new Date(timestamp).toLocaleString()}</p>
 			</span>
-			{showConfirmDelete ? (
+			{(showConfirmDelete && isDeletable) ? (
 				<span className="px-2">
 					<p>Are you sure?</p>
 					<div className="flex justify-around text-sm mt-2">
@@ -31,10 +32,12 @@ export default function Project({ id, title, timestamp, synced, onSelect, onEdit
 						onClick={onEdit}
 						className="w-5 h-5 mx-2 hover:(text-yellow-400)"
 					/>
-					<Trash 
-						className="w-5 h-5 mx-2 hover:(text-red-400)" 
-						onClick={() => setShowConfirmDelete(true)} 
-					/>
+					{isDeletable &&
+						<Trash 
+							className="w-5 h-5 mx-2 hover:(text-red-400)" 
+							onClick={() => setShowConfirmDelete(true)} 
+						/>
+					}
 				</span>
 			)}
 		</li>
