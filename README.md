@@ -2,10 +2,13 @@
 A simple and accessible Google Tasks client with a beautiful interface inspired from todoist. It can also act as a stand alone todolist (without Google Tasks sync).
 
 **Todos:**
-![Todos screenshot](https://i.ibb.co/cTtGML0/Screenshot-from-2021-11-11-13-48-26.png)
+![Todos screenshot](https://i.ibb.co/FHBT0J6/Screenshot-from-2021-11-12-19-39-14.png)
+
+**Settings:**
+![Settings screenshot](https://i.ibb.co/6b9V0X4/Screenshot-from-2021-11-12-19-40-14.png)
 
 **Projects:**
-![Projects screenshot](https://i.ibb.co/j35gyVz/Screenshot-from-2021-11-11-13-51-14.png)
+![Projects screenshot](https://i.ibb.co/vzkDNLs/Screenshot-from-2021-11-12-19-41-52.png)
 
 ---
 ## Features 🌟

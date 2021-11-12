@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 import todoReducer from './todos/todoReducer'
 import projectReducer from './projects/projectReducer'
 import settingReducer from './settings/settingReducer'
-import { initialState } from './persistedState'
+import initialState from './initialState'
 
 const appReducer = combineReducers({
 	todos: todoReducer,
