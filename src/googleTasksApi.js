@@ -1,4 +1,3 @@
-import { gapi } from "gapi-script"
 import store from "./redux/store"
 import { setSignedIn } from './redux'
 
