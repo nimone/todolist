@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useMemo } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { setTodos, addProjects, themes, setCurrentProject } from "./redux"
 import "virtual:windi.css"
@@ -15,6 +15,7 @@ import ProjectList from "./components/ProjectList"
 import Footer from "./components/Footer"
 import { motion } from "framer-motion"
 import { AnimatePresence } from "framer-motion"
+import { getRandomImage } from "./utils/image"
 
 const settingsVariants = {
   hidden: {
@@ -75,11 +76,28 @@ function App() {
     fetchCurrentProjectTodos()
   }, [currentProject, showCompleted])
 
+  const randImg = useMemo(
+    () =>
+      currentTheme === "randomImage"
+        ? getRandomImage({ seeds: ["wallpaper", "nature", "abstract"] })
+        : null,
+    [currentTheme]
+  )
+
   return (
     <div
       className={`App relative min-h-screen ${
-        currentTheme === "randomImage" ? "" : "bg-gradient-to-br"
+        currentTheme === "randomImage"
+          ? "bg-cover bg-center"
+          : "bg-gradient-to-br"
       } ${themes[currentTheme]}`}
+      style={
+        currentTheme === "randomImage"
+          ? {
+              backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(${randImg})`,
+            }
+          : {}
+      }
     >
       <div className="max-w-4xl mx-auto py-6 px-4 sm:p-10">
         <TodoContainer>
